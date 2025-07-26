@@ -16,7 +16,7 @@ const AnimatedNumbers = ({ value, showInfinity }: Props) => {
 
   const motionValue = useMotionValue(0);
   const springValue = useSpring(motionValue, { duration: 3000 });
-  const isInView = useInView(ref);
+  const isInView = useInView(ref, { once: true });
   const [isDone, setIsDone] = useState(false);
 
   useEffect(() => {
