@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Logo from './Logo';
+import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import {
   DiscordIcon,
@@ -43,22 +44,52 @@ const Navbar = () => {
         <CustomLink href='/projects' title='Projects' className='mx-4' />
         <CustomLink href='/articles' title='Articles' className='ml-4' />
       </nav>
-      <nav>
-        <Link href='/' target={'_blank'}>
+      <nav className='flex items-center justify-center flex-wrap'>
+        <motion.a
+          href='https://github.com/abhijit69-ui'
+          target={'_blank'}
+          whileHover={{ y: -2 }}
+          whileTap={{ scale: 0.9 }}
+          className='w-6 mr-3'
+        >
           <GithubIcon />
-        </Link>
-        <Link href='/' target={'_blank'}>
+        </motion.a>
+        <motion.a
+          href='https://www.linkedin.com/in/abhijitxyz/'
+          target={'_blank'}
+          whileHover={{ y: -2 }}
+          whileTap={{ scale: 0.9 }}
+          className='w-6 mx-3'
+        >
           <LinkedIn />
-        </Link>
-        <Link href='/' target={'_blank'}>
+        </motion.a>
+        <motion.a
+          href='https://discord.gg/qVnRmAdXaK'
+          target={'_blank'}
+          whileHover={{ y: -2 }}
+          whileTap={{ scale: 0.9 }}
+          className='w-6 mx-3'
+        >
           <DiscordIcon />
-        </Link>
-        <Link href='/' target={'_blank'}>
+        </motion.a>
+        <motion.a
+          href='https://x.com/abijit0w0'
+          target={'_blank'}
+          whileHover={{ y: -2 }}
+          whileTap={{ scale: 0.9 }}
+          className='w-6 mx-3'
+        >
           <TwitterIcon />
-        </Link>
-        <Link href='/' target={'_blank'}>
+        </motion.a>
+        <motion.a
+          href='https://in.pinterest.com/abhijitnath829/'
+          target={'_blank'}
+          whileHover={{ y: -2 }}
+          whileTap={{ scale: 0.9 }}
+          className='w-6 ml-3'
+        >
           <Printerest />
-        </Link>
+        </motion.a>
       </nav>
 
       <div className='absolute left-[50%] top-2 translate-x-[-50%]'>
