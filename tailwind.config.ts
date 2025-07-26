@@ -20,6 +20,9 @@ const config: Config = {
       fontFamily: {
         mont: ['var(--font-mont)', ...fontFamily.sans],
       },
+      animation: {
+        'spin-slow': 'spin 8s linear infinite',
+      },
     },
   },
   plugins: [],

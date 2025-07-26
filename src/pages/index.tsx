@@ -5,6 +5,7 @@ import wizardPic from '../../public/images/profile/wizard.png';
 import AnimatedText from '@/components/AnimatedText';
 import Link from 'next/link';
 import { ExternalLink } from '@/components/Icons';
+import HireMe from '@/components/HireMe';
 
 export default function Home() {
   return (
@@ -55,6 +56,8 @@ export default function Home() {
             </div>
           </div>
         </Layout>
+
+        <HireMe />
       </main>
     </>
   );
