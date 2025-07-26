@@ -6,6 +6,7 @@ import AnimatedText from '@/components/AnimatedText';
 import Link from 'next/link';
 import { ExternalLink } from '@/components/Icons';
 import HireMe from '@/components/HireMe';
+import potionPod from '../../public/images/potionpod.png';
 
 export default function Home() {
   return (
@@ -58,6 +59,10 @@ export default function Home() {
         </Layout>
 
         <HireMe />
+
+        <div className='absolute right-8 bottom-8 inline-block w-36'>
+          <Image src={potionPod} alt='abijit' className='w-full h-auto' />
+        </div>
       </main>
     </>
   );
