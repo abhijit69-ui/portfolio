@@ -6,6 +6,7 @@ import profilePic from '../../public/images/profile/profilepic.jpeg';
 import { useEffect, useRef, useState } from 'react';
 import { useInView, useMotionValue, useSpring } from 'framer-motion';
 import Skills from '@/components/Skills';
+import Timeline from '@/components/Timeline';
 
 interface Props {
   value: number;
@@ -129,6 +130,7 @@ const about = () => {
           </div>
 
           <Skills />
+          <Timeline />
         </Layout>
       </main>
     </>
