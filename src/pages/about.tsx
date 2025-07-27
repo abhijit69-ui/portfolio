@@ -5,6 +5,7 @@ import Image from 'next/image';
 import profilePic from '../../public/images/profile/profilepic.jpeg';
 import { useEffect, useRef, useState } from 'react';
 import { useInView, useMotionValue, useSpring } from 'framer-motion';
+import Skills from '@/components/Skills';
 
 interface Props {
   value: number;
@@ -126,6 +127,8 @@ const about = () => {
               </div>
             </div>
           </div>
+
+          <Skills />
         </Layout>
       </main>
     </>
