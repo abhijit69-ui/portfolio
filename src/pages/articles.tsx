@@ -3,59 +3,77 @@ import Layout from '@/components/Layout';
 import Head from 'next/head';
 import Image, { StaticImageData } from 'next/image';
 import Link from 'next/link';
-import imgPlaceholder from '../../public/images/projects/noImage.jpg';
-import exampleImg from '../../public/images/articles/What is Redux with easy explanation.png';
 import { motion, useMotionValue } from 'framer-motion';
 import { useRef } from 'react';
+import useArticles from '@/hooks/useArticles';
+import noImage from '../../public/images/projects/noImage.jpg';
 
 const FramerImage = motion(Image);
 
-interface HoverProp {
+interface HoverArticleProps {
   title: string;
-  img: string | StaticImageData;
-  link: string;
+  cover_image: string | StaticImageData;
+  url: string;
 }
 
-interface Props {
-  img: string | StaticImageData;
+export interface ArticleProps {
+  id?: number;
+  cover_image: string | StaticImageData;
   title: string;
-  date: string;
-  summary?: string;
-  link: string;
+  description?: string;
+  url: string;
+  readable_publish_date: string;
+  public_reaction_count?: number;
 }
-// fetch('https://dev.to/api/articles')
-//   .then((res) => res.json())
-//   .then((data) => console.log(data));
 
-const FeaturedArticles = ({ img, title, date, summary, link }: Props) => {
+const FeaturedArticles = ({
+  id,
+  cover_image,
+  title,
+  readable_publish_date,
+  description,
+  url,
+}: ArticleProps) => {
   return (
-    <li className='relative col-span-1 w-full p-4 bg-light border border-solid border-dark rounded-2xl'>
+    <li
+      id={`article-${id}`}
+      className='relative col-span-1 w-full p-4 bg-light border border-solid border-dark rounded-2xl'
+    >
       <div className='absolute top-0 -right-3 -z-10 w-[102%] h-[103%] rounded-[2rem] bg-dark rounded-br-3xl' />
       <Link
-        href={link}
+        href={url}
         target='_blank'
         className='w-full inline-block cursor-pointer overflow-hidden rounded-lg'
       >
         <FramerImage
-          src={img}
+          src={cover_image}
           alt={title}
+          width={1000}
+          height={450}
           className='w-full h-auto'
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.2 }}
         />
       </Link>
-      <Link href={link} target='_blank'>
+      <Link href={url} target='_blank'>
         <h2 className='capitalize text-2xl font-bold my-2 mt-4 hover:underline'>
           {title}
         </h2>
       </Link>
-      <p className='text-sm mb-2'>{summary}</p>
-      <span className='text-primary font-semibold'>{date}</span>
+      <p className='text-sm mb-2'>{description}</p>
+      <span className='text-primary font-semibold'>
+        {readable_publish_date}
+      </span>
     </li>
   );
 };
 
-const Article = ({ img, title, date, link }: Props) => {
+const Article = ({
+  cover_image,
+  title,
+  readable_publish_date,
+  url,
+}: ArticleProps) => {
   return (
     <motion.li
       initial={{ y: 200 }}
@@ -65,13 +83,15 @@ const Article = ({ img, title, date, link }: Props) => {
     border border-solid border-dark border-r-4 border-b-4
     '
     >
-      <HoverImage title={title} img={img} link={link} />
-      <span className='text-primary font-semibold pl-4'>{date}</span>
+      <HoverImage title={title} cover_image={cover_image} url={url} />
+      <span className='text-primary font-semibold pl-4'>
+        {readable_publish_date}
+      </span>
     </motion.li>
   );
 };
 
-const HoverImage = ({ title, img, link }: HoverProp) => {
+const HoverImage = ({ title, cover_image, url }: HoverArticleProps) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -94,7 +114,7 @@ const HoverImage = ({ title, img, link }: HoverProp) => {
 
   return (
     <Link
-      href={link}
+      href={url}
       target='_blank'
       onMouseMove={handleMouse}
       onMouseLeave={handleMouseLeave}
@@ -107,15 +127,33 @@ const HoverImage = ({ title, img, link }: HoverProp) => {
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1, transition: { duration: 0.2 } }}
         ref={imgRef}
-        src={img}
+        src={cover_image}
         alt={title}
+        width={1000}
+        height={450}
         className='z-10 w-96 h-auto hidden absolute rounded-lg'
       />
     </Link>
   );
 };
 
-const articles = () => {
+const Articles = () => {
+  const { articles, loading } = useArticles();
+
+  if (loading) {
+    return (
+      <p className='font-semibold text-2xl italic'>
+        Loading featured articles...
+      </p>
+    );
+  }
+
+  // Get top 2 articles by public_reaction_count
+  const topTwoArticles = [...articles]
+    .sort(
+      (a, b) => (b.public_reaction_count ?? 0) - (a.public_reaction_count ?? 0)
+    )
+    .slice(0, 2);
   return (
     <>
       <Head>
@@ -129,20 +167,18 @@ const articles = () => {
             className='mb-16'
           />
           <ul className='grid grid-cols-2 gap-16'>
-            <FeaturedArticles
-              img={imgPlaceholder}
-              title='Exaple Blog 1'
-              summary='this is example summary'
-              date='23-07-2025'
-              link='/'
-            />
-            <FeaturedArticles
-              img={exampleImg}
-              title='Exaple Blog 2'
-              summary='this is example summary'
-              date='23-07-2025'
-              link='/'
-            />
+            {topTwoArticles.map((article) => (
+              <FeaturedArticles
+                key={article.id}
+                id={article.id}
+                title={article.title}
+                cover_image={article.cover_image}
+                description={article.description}
+                url={article.url}
+                readable_publish_date={article.readable_publish_date}
+                public_reaction_count={article.public_reaction_count || 0}
+              />
+            ))}
           </ul>
           <h2 className='font-bold text-4xl w-full text-center my-16 mt-32'>
             All Articles
@@ -150,21 +186,9 @@ const articles = () => {
           <ul>
             <Article
               title='Example title'
-              img={exampleImg}
-              date='23 July'
-              link='/'
-            />
-            <Article
-              title='Example title'
-              img={exampleImg}
-              date='23 July'
-              link='/'
-            />
-            <Article
-              title='Example title'
-              img={exampleImg}
-              date='23 July'
-              link='/'
+              cover_image={noImage}
+              readable_publish_date='23 July'
+              url='/'
             />
           </ul>
         </Layout>
@@ -173,4 +197,4 @@ const articles = () => {
   );
 };
 
-export default articles;
+export default Articles;
