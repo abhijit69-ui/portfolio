@@ -5,6 +5,9 @@ import Head from 'next/head';
 import Image, { StaticImageData } from 'next/image';
 import Link from 'next/link';
 import imgPlaceholder from '../../public/images/projects/noImage.jpg';
+import { motion } from 'framer-motion';
+
+const FramerImage = motion(Image);
 
 interface Props {
   type: string;
@@ -35,7 +38,13 @@ const FeaturedProject = ({
         target='_blank'
         className='w-1/2 cursor-pointer overflow-hidden rounded-lg'
       >
-        <Image src={img} alt={title} className='w-full h-auto' />
+        <FramerImage
+          src={img}
+          alt={title}
+          className='w-full h-auto'
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.2 }}
+        />
       </Link>
 
       <div className='w-1/2 flex flex-col items-start justify-between pl-6'>
@@ -79,7 +88,13 @@ const Project = ({ type, title, img, link, github }: Props) => {
         target='_blank'
         className='w-full cursor-pointer overflow-hidden rounded-lg'
       >
-        <Image src={img} alt={title} className='w-full h-auto' />
+        <FramerImage
+          src={img}
+          alt={title}
+          className='w-full h-auto'
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.2 }}
+        />
       </Link>
 
       <div className='w-full flex flex-col items-start justify-between mt-4'>
