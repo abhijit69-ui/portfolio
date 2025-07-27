@@ -22,13 +22,13 @@ export default function Home() {
               <Image
                 src={wizardPic}
                 alt='Abijit'
-                className='w-full h-auto max-w-md'
+                className='w-full h-auto max-w-[450px]'
               />
             </div>
             <div className='w-1/2 flex flex-col items-center self-center'>
               <AnimatedText
                 text='Hey, I’m Abhijit, A Full-Stack Web Developer.'
-                className='!text-6xl !text-left'
+                className='!text-[4.3rem] !text-left'
               />
               <p className='my-4 text-base font-medium'>
                 I develop full-stack apps with React, TypeScript, and modern
