@@ -184,9 +184,25 @@ const Articles = () => {
   return (
     <>
       <Head>
-        <title>Articles Page</title>
-        <meta name='description' content='this is the article page' />
+        <title>Articles by Abhijit Nath | Web Dev Insights</title>
+        <meta
+          name='description'
+          content='Read articles and blog posts written by Abhijit Nath on frontend development, JavaScript, React, and more.'
+        />
+        <meta
+          name='keywords'
+          content='Abhijit Nath blog, web dev articles, frontend tutorials, React posts'
+        />
+        <meta
+          property='og:title'
+          content='Articles by Abhijit Nath | Web Dev Insights'
+        />
+        <meta
+          property='og:description'
+          content='Frontend development articles by Abhijit Nath covering React, JavaScript, and developer experiences.'
+        />
       </Head>
+
       <TransitionEffect />
       <main className='w-full mb-16 flex flex-col items-center justify-center overflow-hidden dark:text-light'>
         <Layout className='pt-16'>

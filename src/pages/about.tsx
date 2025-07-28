@@ -52,12 +52,25 @@ const about = () => {
   return (
     <>
       <Head>
-        <title>Abhijit | About Page</title>
+        <title>About Abhijit Nath | Frontend Developer</title>
         <meta
           name='description'
-          content='this is an about page of dev portfolio'
+          content='Learn more about Abhijit Nath — a passionate frontend developer skilled in building responsive and engaging web applications.'
+        />
+        <meta
+          name='keywords'
+          content='about Abhijit Nath, frontend developer bio, web developer skills, personal story'
+        />
+        <meta
+          property='og:title'
+          content='About Abhijit Nath | Frontend Developer'
+        />
+        <meta
+          property='og:description'
+          content="Discover Abhijit's journey, skills, and mission as a frontend web developer."
         />
       </Head>
+
       <TransitionEffect />
       <main className='flex w-full flex-col items-center justify-center dark:text-light'>
         <Layout className='pt-16'>

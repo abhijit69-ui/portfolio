@@ -154,12 +154,22 @@ const projects = () => {
   return (
     <>
       <Head>
-        <title>Abhijit&apos;s Project Page</title>
+        <title>Abhijit Nath | Projects Showcase</title>
         <meta
           name='description'
-          content='this is the projects page of dev portfolio'
+          content='A collection of frontend projects by Abhijit Nath. See what I’ve built using React, Tailwind CSS, and modern web technologies.'
+        />
+        <meta
+          name='keywords'
+          content='Abhijit Nath projects, React portfolio, Tailwind projects, frontend portfolio'
+        />
+        <meta property='og:title' content='Abhijit Nath | Projects Showcase' />
+        <meta
+          property='og:description'
+          content='Browse selected web projects demonstrating frontend skills and creativity.'
         />
       </Head>
+
       <TransitionEffect />
       <main className='w-full mb-16 flex flex-col items-center justify-center dark:text-light'>
         <Layout className='pt-16'>
