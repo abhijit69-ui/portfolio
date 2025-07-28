@@ -139,14 +139,23 @@ const HoverImage = ({ title, cover_image, url }: HoverArticleProps) => {
 };
 
 const Articles = () => {
-  const { articles, loading } = useArticles();
+  const loadMoreRef = useRef<HTMLButtonElement | null>(null);
+
+  const { articles, loading, hasMore, fetchArticles, page } = useArticles();
+
+  const loadMore = () => {
+    fetchArticles(page + 1, () => {
+      setTimeout(() => {
+        loadMoreRef.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        });
+      }, 100);
+    });
+  };
 
   if (loading) {
-    return (
-      <p className='font-semibold text-2xl italic'>
-        Loading featured articles...
-      </p>
-    );
+    return <p className='font-semibold text-2xl italic'>Loading articles...</p>;
   }
 
   // Get top 2 articles by public_reaction_count
@@ -202,6 +211,27 @@ const Articles = () => {
               />
             ))}
           </ul>
+
+          {hasMore && (
+            <motion.button
+              initial={{ y: 100, opacity: 0 }}
+              whileInView={{
+                y: 0,
+                opacity: 1,
+                transition: { duration: 0.5, ease: 'easeInOut' },
+              }}
+              viewport={{ once: true, amount: 0.2 }}
+              type='button'
+              ref={loadMoreRef}
+              onClick={(e) => {
+                e.preventDefault();
+                loadMore();
+              }}
+              className='mt-10 px-6 py-2 bg-dark text-light rounded-lg'
+            >
+              {loading ? 'Loading...' : 'Load More'}
+            </motion.button>
+          )}
         </Layout>
       </main>
     </>
