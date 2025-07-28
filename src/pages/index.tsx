@@ -29,13 +29,13 @@ export default function Home() {
             </div>
             <div className='w-1/2 flex flex-col items-center self-center'>
               <AnimatedText
-                text='Hey, I’m Abhijit, A Full-Stack Web Developer.'
-                className='!text-[4.3rem] !text-left'
+                text='Hi, I’m Abhijit, A Full-Stack Web Developer.'
+                className='!text-[4.58rem] !text-left'
               />
               <p className='my-4 text-base font-medium'>
-                I develop full-stack apps with React, TypeScript, and modern
-                backend tools. Clean code, smooth UI, and practical solutions —
-                all in one place.
+                I design and develop clean, performant websites using modern
+                tools like React and TypeScript. My portfolio showcases what I
+                build — and how I grow with each project.
               </p>
               <div className='flex items-center self-start mt-2'>
                 <Link
