@@ -22,7 +22,7 @@ export default function Home() {
               <Image
                 src={wizardPic}
                 alt='Abijit'
-                className='w-[70%] h-auto lg:hidden md:inline-block md:w-full'
+                className='w-[74%] h-auto lg:hidden md:inline-block md:w-full'
                 priority
                 sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw'
               />
