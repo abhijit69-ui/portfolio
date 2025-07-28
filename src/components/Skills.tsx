@@ -10,7 +10,7 @@ import {
   sassIcon,
   tailwindIcon,
   gitIcon,
-  mongoICon,
+  mongoIcon,
   typeScriptIcon,
   goIcon,
 } from '@/assets/skillicon';
@@ -73,7 +73,7 @@ const Skills = () => {
         <Skill icon={sassIcon} x='14vw' y='-12vw' />
         <Skill icon={tailwindIcon} x='29.5vw' y='-5vw' />
         <Skill icon={gitIcon} x='0vw' y='-20vw' />
-        <Skill icon={mongoICon} x='-29vw' y='15vw' />
+        <Skill icon={mongoIcon} x='-29vw' y='15vw' />
         <Skill icon={typeScriptIcon} x='21vw' y='16vw' />
         <Skill icon={goIcon} x='-41vw' y='1vw' />
       </div>

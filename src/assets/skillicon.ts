@@ -6,7 +6,7 @@ import nextIcon from '../../public/images/skillsicon/nextIcon.png';
 import sassIcon from '../../public/images/skillsicon/sassIcon.png';
 import tailwindIcon from '../../public/images/skillsicon/tailwindIcon.png';
 import gitIcon from '../../public/images/skillsicon/gitIcon.png';
-import mongoICon from '../../public/images/skillsicon/mongoICon.png';
+import mongoIcon from '../../public/images/skillsicon/mongoICon.png';
 import typeScriptIcon from '../../public/images/skillsicon/typeScriptIcon.png';
 import goIcon from '../../public/images/skillsicon/goIcon.png';
 
@@ -19,7 +19,7 @@ export {
   sassIcon,
   tailwindIcon,
   gitIcon,
-  mongoICon,
+  mongoIcon,
   typeScriptIcon,
   goIcon,
 };
