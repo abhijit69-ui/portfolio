@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { motion, useMotionValue } from 'framer-motion';
 import { useRef } from 'react';
 import useArticles from '@/hooks/useArticles';
+import TransitionEffect from '@/components/TransitionEffect';
 
 const FramerImage = motion(Image);
 
@@ -161,7 +162,11 @@ const Articles = () => {
   };
 
   if (loading) {
-    return <p className='font-semibold text-2xl italic'>Loading articles...</p>;
+    return (
+      <p className='font-semibold text-2xl italic dark:text-light'>
+        Loading articles...
+      </p>
+    );
   }
 
   // Get top 2 articles by public_reaction_count
@@ -182,6 +187,7 @@ const Articles = () => {
         <title>Articles Page</title>
         <meta name='description' content='this is the article page' />
       </Head>
+      <TransitionEffect />
       <main className='w-full mb-16 flex flex-col items-center justify-center overflow-hidden dark:text-light'>
         <Layout className='pt-16'>
           <AnimatedText

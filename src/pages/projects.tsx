@@ -6,6 +6,7 @@ import Image, { StaticImageData } from 'next/image';
 import Link from 'next/link';
 import imgPlaceholder from '../../public/images/projects/noImage.jpg';
 import { motion } from 'framer-motion';
+import TransitionEffect from '@/components/TransitionEffect';
 
 const FramerImage = motion(Image);
 
@@ -159,6 +160,7 @@ const projects = () => {
           content='this is the projects page of dev portfolio'
         />
       </Head>
+      <TransitionEffect />
       <main className='w-full mb-16 flex flex-col items-center justify-center dark:text-light'>
         <Layout className='pt-16'>
           <AnimatedText

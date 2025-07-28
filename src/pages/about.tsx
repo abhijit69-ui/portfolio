@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useInView, useMotionValue, useSpring } from 'framer-motion';
 import Skills from '@/components/Skills';
 import Timeline from '@/components/Timeline';
+import TransitionEffect from '@/components/TransitionEffect';
 
 interface Props {
   value: number;
@@ -57,6 +58,7 @@ const about = () => {
           content='this is an about page of dev portfolio'
         />
       </Head>
+      <TransitionEffect />
       <main className='flex w-full flex-col items-center justify-center dark:text-light'>
         <Layout className='pt-16'>
           <AnimatedText
