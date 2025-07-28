@@ -36,9 +36,9 @@ const FeaturedArticles = ({
   return (
     <li
       id={`article-${id}`}
-      className='relative col-span-1 w-full p-4 bg-light border border-solid border-dark rounded-2xl'
+      className='relative col-span-1 w-full p-4 bg-light border border-solid border-dark rounded-2xl dark:bg-dark dark:border-light'
     >
-      <div className='absolute top-0 -right-3 -z-10 w-[102%] h-[103%] rounded-[2rem] bg-dark rounded-br-3xl' />
+      <div className='absolute top-0 -right-3 -z-10 w-[102%] h-[103%] rounded-[2rem] bg-dark rounded-br-3xl dark:bg-light' />
       <Link
         href={url}
         target='_blank'
@@ -52,6 +52,7 @@ const FeaturedArticles = ({
           className='w-full h-auto'
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.2 }}
+          sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw'
         />
       </Link>
       <Link href={url} target='_blank'>
@@ -60,7 +61,7 @@ const FeaturedArticles = ({
         </h2>
       </Link>
       <p className='text-sm mb-2'>{description}</p>
-      <span className='text-primary font-semibold'>
+      <span className='text-primary font-semibold dark:text-primaryDark'>
         {readable_publish_date}
       </span>
     </li>
@@ -81,11 +82,11 @@ const Article = ({
       whileInView={{ y: 0, transition: { duration: 0.5, ease: 'easeInOut' } }}
       viewport={{ once: true }}
       className='relative w-full p-4 py-6 my-4 rounded-xl flex items-center justify-between bg-light text-dark first:mt-0 
-    border border-solid border-dark border-r-4 border-b-4
+    border border-solid border-dark border-r-4 border-b-4 dark:border-light dark:bg-dark dark:text-light
     '
     >
       <HoverImage title={title} cover_image={cover_image} url={url} />
-      <span className='text-primary font-semibold pl-4'>
+      <span className='text-primary font-semibold pl-4 dark:text-primaryDark'>
         {readable_publish_date}
       </span>
     </motion.li>
@@ -173,10 +174,10 @@ const Articles = () => {
   return (
     <>
       <Head>
-        <title>Article Page</title>
+        <title>Articles Page</title>
         <meta name='description' content='this is the article page' />
       </Head>
-      <main className='w-full mb-16 flex flex-col items-center justify-center overflow-hidden'>
+      <main className='w-full mb-16 flex flex-col items-center justify-center overflow-hidden dark:text-light'>
         <Layout className='pt-16'>
           <AnimatedText
             text='Where knowledge is cast and shared'

@@ -25,11 +25,11 @@ const Details = ({ title, subtitile, date, place, description }: Props) => {
       >
         <h3 className='capitalize font-bold text-2xl'>{title}</h3>
         {subtitile && (
-          <h4 className='text-lg font-semibold italic mb-1 text-primary'>
+          <h4 className='text-lg font-semibold italic mb-1 text-primary dark:text-primaryDark'>
             {subtitile}
           </h4>
         )}
-        <span className='capitalize font-medium text-dark/75'>
+        <span className='capitalize font-medium text-dark/75 dark:text-light/75'>
           {date} | {place}
         </span>
         <p className='font-medium w-full'>{description}</p>
@@ -43,6 +43,7 @@ const Timeline = () => {
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start end', 'center start'],
+    layoutEffect: false,
   });
 
   return (
@@ -54,7 +55,7 @@ const Timeline = () => {
       <div ref={ref} className='w-[75%] mx-auto relative'>
         <motion.div
           style={{ scaleY: scrollYProgress }}
-          className='absolute left-9 top-0 w-[4px] h-full bg-dark origin-top'
+          className='absolute left-9 top-0 w-[4px] h-full bg-dark origin-top dark:bg-light'
         />
 
         <ul className='w-full flex flex-col items-start justify-between ml-4'>
@@ -69,7 +70,7 @@ const Timeline = () => {
             date='2020-2023'
             place='Assam DonBosco University'
             description='Relevant coursework included Programming in C/C++, Data Structures, Database Management Systems (SQL/DBMS), 
-            Automata Theory, Computer Networks, ML and System Design.'
+            Computer Networks, ML and System Design.'
           />
           <Details
             title='Other Professional Experience'

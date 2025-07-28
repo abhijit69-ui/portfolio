@@ -29,8 +29,7 @@ const Skill = ({ icon, x, y }: Props) => {
       className='flex items-center justify-center absolute cursor-pointer'
       whileHover={{ scale: 1.05 }}
       initial={{ x: 0, y: 0 }}
-      whileInView={{ x: x, y: y }}
-      transition={{ duration: 1.5 }}
+      whileInView={{ x: x, y: y, transition: { duration: 1.5 } }}
       viewport={{ once: true }}
     >
       <Image src={icon} alt='skill-icon' width={40} height={40} />
@@ -44,7 +43,7 @@ const Skills = () => {
       <h2 className='font-bold text-8xl mt-64 w-full text-center'>
         Tech Stack
       </h2>
-      <div className='w-full h-screen relative flex items-center justify-center rounded-full bg-circularLight'>
+      <div className='w-full h-screen relative flex items-center justify-center rounded-full bg-circularLight dark:bg-circularDark'>
         <motion.div
           className='flex flex-col items-center justify-center rounded-full shadow-dark cursor-pointer'
           whileHover={{ scale: 1.05 }}
