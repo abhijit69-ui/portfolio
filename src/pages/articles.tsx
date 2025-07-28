@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { motion, useMotionValue } from 'framer-motion';
 import { useRef } from 'react';
 import useArticles from '@/hooks/useArticles';
-import noImage from '../../public/images/projects/noImage.jpg';
 
 const FramerImage = motion(Image);
 
@@ -17,7 +16,7 @@ interface HoverArticleProps {
 }
 
 export interface ArticleProps {
-  id?: number;
+  id: number;
   cover_image: string | StaticImageData;
   title: string;
   description?: string;
@@ -69,6 +68,7 @@ const FeaturedArticles = ({
 };
 
 const Article = ({
+  id,
   cover_image,
   title,
   readable_publish_date,
@@ -76,6 +76,7 @@ const Article = ({
 }: ArticleProps) => {
   return (
     <motion.li
+      key={id}
       initial={{ y: 200 }}
       whileInView={{ y: 0, transition: { duration: 0.5, ease: 'easeInOut' } }}
       viewport={{ once: true }}
@@ -154,6 +155,12 @@ const Articles = () => {
       (a, b) => (b.public_reaction_count ?? 0) - (a.public_reaction_count ?? 0)
     )
     .slice(0, 2);
+
+  // Remaining Articles
+  const remainingArticles = articles.filter(
+    (article) => !topTwoArticles.find((top) => top.id === article.id)
+  );
+
   return (
     <>
       <Head>
@@ -184,12 +191,16 @@ const Articles = () => {
             All Articles
           </h2>
           <ul>
-            <Article
-              title='Example title'
-              cover_image={noImage}
-              readable_publish_date='23 July'
-              url='/'
-            />
+            {remainingArticles.map((article) => (
+              <Article
+                key={article.id}
+                id={article.id}
+                title={article.title}
+                cover_image={article.cover_image}
+                readable_publish_date={article.readable_publish_date}
+                url={article.url}
+              />
+            ))}
           </ul>
         </Layout>
       </main>
