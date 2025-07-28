@@ -5,12 +5,12 @@ const Footer = () => {
   return (
     <footer
       className='w-full border-t-2 border-solid border-dark font-medium text-lg
-    dark:text-light dark:border-light
+    dark:text-light dark:border-light sm:text-base
     '
     >
-      <Layout className='py-8 flex items-center justify-between'>
+      <Layout className='py-8 flex items-center justify-between lg:flex-col lg:py-6'>
         <span>{new Date().getFullYear()} &copy; All Rights Reserved</span>
-        <div className='flex items-center'>
+        <div className='flex items-center lg:py-2'>
           Made with{' '}
           <span className='text-primary dark:text-primaryDark text-2xl px-1'>
             &#9825;
@@ -23,7 +23,7 @@ const Footer = () => {
         <Link
           href='https://mail.google.com/mail/?view=cm&fs=1&to=abhijitnath1a1@gmail.com'
           target={'_blank'}
-          className='hover:underline hover:underline-offset-2'
+          className='underline underline-offset-2'
         >
           Say Hello!
         </Link>
