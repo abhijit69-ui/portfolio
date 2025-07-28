@@ -27,11 +27,13 @@ const useArticles = () => {
       }));
 
       if (newArticles.length > 0) {
-        setArticles((prev) => [...prev, ...newArticles]);
+        setArticles((prev) =>
+          pageNumber === 1 ? newArticles : [...prev, ...newArticles]
+        );
         setPage(pageNumber);
         onAfterLoad?.();
       } else {
-        setHasMore(false); // No more articles
+        setHasMore(false);
       }
     } catch (err) {
       console.error(err);
@@ -40,24 +42,8 @@ const useArticles = () => {
     }
   };
 
-  // initial fetch
   useEffect(() => {
-    axios
-      .get('https://dev.to/api/articles')
-      .then((res) => {
-        const filteredArticles = res.data.map((article: ArticleProps) => ({
-          id: article.id,
-          title: article.title,
-          description: article.description || 'No description provided.',
-          cover_image: article.cover_image || noImage,
-          readable_publish_date: article.readable_publish_date,
-          url: article.url,
-          public_reaction_count: article.public_reaction_count ?? 0, // Optional fallback
-        }));
-        setArticles(filteredArticles);
-      })
-      .catch((err) => console.error(err))
-      .finally(() => setLoading(false));
+    fetchArticles(1);
   }, []);
 
   const loadMore = () => {

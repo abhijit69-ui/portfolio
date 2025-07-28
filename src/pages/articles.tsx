@@ -56,7 +56,7 @@ const FeaturedArticles = ({
         />
       </Link>
       <Link href={url} target='_blank'>
-        <h2 className='capitalize text-2xl font-bold my-2 mt-4 hover:underline'>
+        <h2 className='capitalize text-2xl font-bold my-2 mt-4 hover:underline xs:text-lg'>
           {title}
         </h2>
       </Link>
@@ -83,10 +83,15 @@ const Article = ({
       viewport={{ once: true }}
       className='relative w-full p-4 py-6 my-4 rounded-xl flex items-center justify-between bg-light text-dark first:mt-0 
     border border-solid border-dark border-r-4 border-b-4 dark:border-light dark:bg-dark dark:text-light
+    sm:flex-col
     '
     >
       <HoverImage title={title} cover_image={cover_image} url={url} />
-      <span className='text-primary font-semibold pl-4 dark:text-primaryDark'>
+      <span
+        className='text-primary font-semibold pl-4 dark:text-primaryDark sm:self-start sm:pl-0
+      xs:text-sm
+      '
+      >
         {readable_publish_date}
       </span>
     </motion.li>
@@ -133,7 +138,7 @@ const HoverImage = ({ title, cover_image, url }: HoverArticleProps) => {
         alt={title}
         width={1000}
         height={450}
-        className='z-10 w-96 h-auto hidden absolute rounded-lg'
+        className='z-10 w-96 h-auto hidden absolute rounded-lg md:!hidden'
       />
     </Link>
   );
@@ -181,9 +186,9 @@ const Articles = () => {
         <Layout className='pt-16'>
           <AnimatedText
             text='Where knowledge is cast and shared'
-            className='mb-16'
+            className='mb-16 lg:!text-7xl sm:mb-8 sm:!text-6xl xs:!text-4xl'
           />
-          <ul className='grid grid-cols-2 gap-16'>
+          <ul className='grid grid-cols-2 gap-16 lg:gap-8 md:grid-cols-1 md:gap-y-16'>
             {topTwoArticles.map((article) => (
               <FeaturedArticles
                 key={article.id}
@@ -211,6 +216,11 @@ const Articles = () => {
                 url={article.url}
               />
             ))}
+            {loading && (
+              <p className='text-center my-4 italic'>
+                Loading more articles...
+              </p>
+            )}
           </ul>
 
           {hasMore && (
@@ -228,7 +238,9 @@ const Articles = () => {
                 e.preventDefault();
                 loadMore();
               }}
-              className='mt-10 px-6 py-2 bg-dark text-light rounded-lg'
+              className='mt-10 mb-24 px-6 py-2 bg-dark text-light rounded-lg block mx-auto sm:text-sm font-semibold
+              dark:bg-light dark:text-dark
+              '
             >
               {loading ? 'Loading...' : 'Load More'}
             </motion.button>
