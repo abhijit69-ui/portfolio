@@ -29,12 +29,11 @@ Clone the repository and install dependencies:
 
 ```bash
 git clone https://github.com/abhijit69-ui/portfolio.git
-cd your-portfolio
+cd portfolio
 npm install
 
 First, run the development server:
 
-```bash
 npm run dev
 # or
 yarn dev
