@@ -4,9 +4,10 @@ import Head from 'next/head';
 import Image, { StaticImageData } from 'next/image';
 import Link from 'next/link';
 import { motion, useMotionValue } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import useArticles from '@/hooks/useArticles';
 import TransitionEffect from '@/components/TransitionEffect';
+import type { Article as ArticleProps } from '@/types/article';
 
 const FramerImage = motion(Image);
 
@@ -16,15 +17,7 @@ interface HoverArticleProps {
   url: string;
 }
 
-export interface ArticleProps {
-  id: number;
-  cover_image: string | StaticImageData;
-  title: string;
-  description?: string;
-  url: string;
-  readable_publish_date: string;
-  public_reaction_count?: number;
-}
+
 
 const FeaturedArticles = ({
   id,
@@ -43,6 +36,7 @@ const FeaturedArticles = ({
       <Link
         href={url}
         target='_blank'
+        rel='noopener noreferrer'
         className='w-full inline-block cursor-pointer overflow-hidden rounded-lg'
       >
         <FramerImage
@@ -54,6 +48,7 @@ const FeaturedArticles = ({
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.2 }}
           sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw'
+          loading='lazy'
         />
       </Link>
       <Link href={url} target='_blank'>
@@ -124,6 +119,7 @@ const HoverImage = ({ title, cover_image, url }: HoverArticleProps) => {
     <Link
       href={url}
       target='_blank'
+      rel='noopener noreferrer'
       onMouseMove={handleMouse}
       onMouseLeave={handleMouseLeave}
     >
@@ -140,6 +136,7 @@ const HoverImage = ({ title, cover_image, url }: HoverArticleProps) => {
         width={1000}
         height={450}
         className='z-10 w-96 h-auto hidden absolute rounded-lg md:!hidden'
+        loading='lazy'
       />
     </Link>
   );
@@ -148,7 +145,7 @@ const HoverImage = ({ title, cover_image, url }: HoverArticleProps) => {
 const Articles = () => {
   const loadMoreRef = useRef<HTMLButtonElement | null>(null);
 
-  const { articles, loading, hasMore, fetchArticles, page } = useArticles();
+  const { articles, initialLoading, isFetchingMore, hasMore, fetchArticles, page, error } = useArticles();
 
   const loadMore = () => {
     fetchArticles(page + 1, () => {
@@ -161,11 +158,54 @@ const Articles = () => {
     });
   };
 
-  if (loading) {
+  // Infinite scroll: auto-load when Load More button enters viewport
+  useEffect(() => {
+    if (!loadMoreRef.current) return;
+
+    const buttonEl = loadMoreRef.current;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (!entry.isIntersecting) return;
+        if (!hasMore || isFetchingMore || initialLoading) return;
+        fetchArticles(page + 1);
+      },
+      { root: null, rootMargin: '200px', threshold: 0.1 }
+    );
+
+    observer.observe(buttonEl);
+
+    return () => {
+      observer.unobserve(buttonEl);
+      observer.disconnect();
+    };
+  }, [hasMore, isFetchingMore, initialLoading, fetchArticles, page]);
+
+  if (initialLoading) {
     return (
       <p className='font-semibold text-2xl italic dark:text-light'>
         Loading articles...
       </p>
+    );
+  }
+
+  // Initial failure state
+  if (!initialLoading && articles.length === 0 && error) {
+    return (
+      <main className='w-full mb-16 flex flex-col items-center justify-center overflow-hidden dark:text-light'>
+        <Layout className='pt-16'>
+          <p className='text-center my-4 text-red-600 dark:text-red-400 font-semibold'>
+            Failed to load articles: {error}
+          </p>
+          <button
+            type='button'
+            onClick={() => fetchArticles(1)}
+            className='mt-4 px-6 py-2 bg-dark text-light rounded-lg sm:text-sm font-semibold dark:bg-light dark:text-dark'
+          >
+            Retry
+          </button>
+        </Layout>
+      </main>
     );
   }
 
@@ -210,6 +250,13 @@ const Articles = () => {
             text='Where knowledge is cast and shared'
             className='mb-16 lg:!text-7xl sm:mb-8 sm:!text-6xl xs:!text-4xl'
           />
+
+          {error && articles.length > 0 && (
+            <p className='text-center my-4 text-red-600 dark:text-red-400 font-semibold'>
+              Something went wrong while fetching more articles: {error}
+            </p>
+          )}
+
           <ul className='grid grid-cols-2 gap-16 lg:gap-8 md:grid-cols-1 md:gap-y-16'>
             {topTwoArticles.map((article) => (
               <FeaturedArticles
@@ -238,7 +285,7 @@ const Articles = () => {
                 url={article.url}
               />
             ))}
-            {loading && (
+            {isFetchingMore && (
               <p className='text-center my-4 italic'>
                 Loading more articles...
               </p>
@@ -263,8 +310,11 @@ const Articles = () => {
               className='mt-10 mb-24 px-6 py-2 bg-dark text-light rounded-lg block mx-auto sm:text-sm font-semibold
               dark:bg-light dark:text-dark
               '
+              disabled={isFetchingMore}
+              aria-busy={isFetchingMore}
+              aria-label='Load more articles'
             >
-              {loading ? 'Loading...' : 'Load More'}
+              {isFetchingMore ? 'Loading...' : 'Load More'}
             </motion.button>
           )}
         </Layout>
