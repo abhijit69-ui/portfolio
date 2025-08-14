@@ -51,7 +51,7 @@ const FeaturedArticles = ({
           loading='lazy'
         />
       </Link>
-      <Link href={url} target='_blank'>
+      <Link href={url} target='_blank' rel='noopener noreferrer'>
         <h2 className='capitalize text-2xl font-bold my-2 mt-4 hover:underline xs:text-lg'>
           {title}
         </h2>
@@ -142,27 +142,35 @@ const HoverImage = ({ title, cover_image, url }: HoverArticleProps) => {
   );
 };
 
+// Skeletons
+const FeaturedArticleSkeleton = () => (
+  <li className='relative col-span-1 w-full p-4 bg-light border border-solid border-dark rounded-2xl dark:bg-dark dark:border-light animate-pulse'>
+    <div className='absolute top-0 -right-3 -z-10 w-[102%] h-[103%] rounded-[2rem] bg-dark rounded-br-3xl dark:bg-light' />
+    <div className='w-full h-[280px] md:h-[220px] rounded-lg bg-gray-200 dark:bg-gray-700' />
+    <div className='h-6 w-3/4 bg-gray-200 dark:bg-gray-700 rounded mt-4' />
+    <div className='h-4 w-full bg-gray-200 dark:bg-gray-700 rounded mt-2' />
+    <div className='h-4 w-5/6 bg-gray-200 dark:bg-gray-700 rounded mt-1' />
+    <div className='h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded mt-3' />
+  </li>
+);
+
+const ArticleSkeleton = () => (
+  <li className='relative w-full p-4 py-6 my-4 rounded-xl flex items-center justify-between bg-light text-dark first:mt-0 border border-solid border-dark border-r-4 border-b-4 dark:border-light dark:bg-dark dark:text-light animate-pulse sm:flex-col'>
+    <div className='w-2/3 h-5 bg-gray-200 dark:bg-gray-700 rounded sm:w-full' />
+    <div className='h-4 w-24 bg-gray-200 dark:bg-gray-700 rounded sm:self-start sm:mt-2' />
+  </li>
+);
+
 const Articles = () => {
-  const loadMoreRef = useRef<HTMLButtonElement | null>(null);
+  const sentinelRef = useRef<HTMLDivElement | null>(null);
 
   const { articles, initialLoading, isFetchingMore, hasMore, fetchArticles, page, error } = useArticles();
 
-  const loadMore = () => {
-    fetchArticles(page + 1, () => {
-      setTimeout(() => {
-        loadMoreRef.current?.scrollIntoView({
-          behavior: 'smooth',
-          block: 'center',
-        });
-      }, 100);
-    });
-  };
-
-  // Infinite scroll: auto-load when Load More button enters viewport
+  // Infinite scroll: auto-load when sentinel enters viewport
   useEffect(() => {
-    if (!loadMoreRef.current) return;
+    if (!sentinelRef.current) return;
 
-    const buttonEl = loadMoreRef.current;
+    const el = sentinelRef.current;
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
@@ -173,19 +181,46 @@ const Articles = () => {
       { root: null, rootMargin: '200px', threshold: 0.1 }
     );
 
-    observer.observe(buttonEl);
-
+    observer.observe(el);
     return () => {
-      observer.unobserve(buttonEl);
+      observer.unobserve(el);
       observer.disconnect();
     };
   }, [hasMore, isFetchingMore, initialLoading, fetchArticles, page]);
 
   if (initialLoading) {
     return (
-      <p className='font-semibold text-2xl italic dark:text-light'>
-        Loading articles...
-      </p>
+      <>
+        <Head>
+          <title>Articles by Abhijit Nath | Web Dev Insights</title>
+        </Head>
+        <TransitionEffect />
+        <main className='w-full mb-16 flex flex-col items-center justify-center overflow-hidden dark:text-light'>
+          <Layout className='pt-16'>
+            <AnimatedText
+              text='Where knowledge is cast and shared'
+              className='mb-16 lg:!text-7xl sm:mb-8 sm:!text-6xl xs:!text-4xl'
+            />
+
+            <ul className='grid grid-cols-2 gap-16 lg:gap-8 md:grid-cols-1 md:gap-y-16'>
+              <FeaturedArticleSkeleton />
+              <FeaturedArticleSkeleton />
+            </ul>
+
+            <h2 className='font-bold text-4xl w-full text-center my-16 mt-32'>
+              All Articles
+            </h2>
+
+            <ul>
+              {Array.from({ length: 6 }).map((_, idx) => (
+                <ArticleSkeleton key={idx} />
+              ))}
+            </ul>
+
+            <div ref={sentinelRef} className='h-8' />
+          </Layout>
+        </main>
+      </>
     );
   }
 
@@ -286,37 +321,15 @@ const Articles = () => {
               />
             ))}
             {isFetchingMore && (
-              <p className='text-center my-4 italic'>
-                Loading more articles...
-              </p>
+              <>
+                {Array.from({ length: 3 }).map((_, idx) => (
+                  <ArticleSkeleton key={`skeleton-${idx}`} />
+                ))}
+              </>
             )}
           </ul>
 
-          {hasMore && (
-            <motion.button
-              initial={{ y: 100, opacity: 0 }}
-              whileInView={{
-                y: 0,
-                opacity: 1,
-                transition: { duration: 0.5, ease: 'easeInOut' },
-              }}
-              viewport={{ once: true, amount: 0.2 }}
-              type='button'
-              ref={loadMoreRef}
-              onClick={(e) => {
-                e.preventDefault();
-                loadMore();
-              }}
-              className='mt-10 mb-24 px-6 py-2 bg-dark text-light rounded-lg block mx-auto sm:text-sm font-semibold
-              dark:bg-light dark:text-dark
-              '
-              disabled={isFetchingMore}
-              aria-busy={isFetchingMore}
-              aria-label='Load more articles'
-            >
-              {isFetchingMore ? 'Loading...' : 'Load More'}
-            </motion.button>
-          )}
+          <div ref={sentinelRef} className='h-8' />
         </Layout>
       </main>
     </>
