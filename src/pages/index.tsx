@@ -61,7 +61,7 @@ export default function Home() {
               </p>
               <div className='flex items-center self-start mt-2 lg:self-center'>
                 <Link
-                  href='/dummy.pdf'
+                  href='/abijitnath-resume.pdf'
                   target={'_blank'}
                   // download={true}
                   className='flex items-center bg-dark text-light p-2.5 px-6 
@@ -75,7 +75,7 @@ export default function Home() {
                   Resume <ExternalLink className='w-6 ml-1' />
                 </Link>
                 <Link
-                  href='mailto:abhijitnath100th@gmail.com'
+                  href='https://mail.google.com/mail/?view=cm&fs=1&to=abhijitnath100th@gmail.com'
                   target={'_blank'}
                   className='ml-4 text-lg font-medium capitalize text-dark underline dark:text-light
                   md:text-base
