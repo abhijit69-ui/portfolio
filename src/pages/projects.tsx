@@ -5,6 +5,9 @@ import Head from 'next/head';
 import Image, { StaticImageData } from 'next/image';
 import Link from 'next/link';
 import imgPlaceholder from '../../public/images/projects/noImage.jpg';
+import feature1 from '../../public/images/projects/feature-1.png';
+import feature2 from '../../public/images/projects/feature-2.png';
+import project1 from '../../public/images/projects/project-1.png';
 import { motion } from 'framer-motion';
 import TransitionEffect from '@/components/TransitionEffect';
 
@@ -181,23 +184,22 @@ const projects = () => {
           <div className='grid grid-cols-12 gap-24 gap-y-32 xl:gap-x-16 lg:gap-x-8 md:gap-y-24 sm:gap-x-0'>
             <div className='col-span-12'>
               <FeaturedProject
-                img={imgPlaceholder}
+                img={feature1}
                 type='Featured Project'
-                title='Project Title!'
-                summary='A feature-rich Crypto Screener App using React, Tailwind CSS, Context API, React Router and Recharts. 
-                            It shows detail regarding almost all the cryptocurrency. You can easily convert the price in your 
-                            local currency.'
-                github='/'
-                link='/'
+                title='Topmind Care Landing Page'
+                summary='Topmind Care is a responsive landing page built as part of an assignment project for an internship application.
+The website showcases mindfulness and meditation programs for kids, featuring reusable components, smooth animations, and mobile-first design.'
+                github='https://github.com/abhijit69-ui/topmind-care'
+                link='https://topmind-care-pi.vercel.app/'
               />
             </div>
             <div className='col-span-6 sm:col-span-12'>
               <Project
-                img={imgPlaceholder}
+                img={project1}
                 type='Project'
-                title='Project Title 2!'
-                github='/'
-                link='/'
+                title='EdgeAI Saas landing Page'
+                github='https://github.com/abhijit69-ui/saas-landing-page'
+                link='https://saas-landingpage-five.vercel.app'
               />
             </div>
             <div className='col-span-6 sm:col-span-12'>
@@ -211,14 +213,12 @@ const projects = () => {
             </div>
             <div className='col-span-12'>
               <FeaturedProject
-                img={imgPlaceholder}
+                img={feature2}
                 type='Featured Project'
-                title='Project Title 4!'
-                summary='A feature-rich Crypto Screener App using React, Tailwind CSS, Context API, React Router and Recharts. 
-                            It shows detail regarding almost all the cryptocurrency. You can easily convert the price in your 
-                            local currency.'
-                github='/'
-                link='/'
+                title='Portfolio Website'
+                summary='A responsive personal portfolio showcasing my projects, articles, and skills. It includes an animated hero section, project cards with live and GitHub links, an API-driven articles section, and an about section with a skills grid and scroll-based animations for a polished user experience.'
+                github='https://github.com/abhijit69-ui/portfolio'
+                link='https://abijit-dev.vercel.app/'
               />
             </div>
             <div className='col-span-6 sm:col-span-12'>
